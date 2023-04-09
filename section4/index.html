@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
+    <style>
+      .completed {
+        text-decoration: line-through;
+      }
+      li {
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <input type="text" v-model="newTodo" />
+      <button @click="addTodo">追加</button>
+      <input type="text" v-model="searchWord" placeholder="検索ワード" />
+      検索ボックス
+      <ul>
+        <li
+          v-for="(todo, index) in filteredTodos"
+          :class="{completed: todo.isCompleted}"
+        >
+          <label
+            ><input type="checkbox" v-model="todo.isCompleted" /> {{ todo.title
+            }}</label
+          >
+          <button @click="deleteTodo(index)">削除</button>
+        </li>
+      </ul>
+    </div>
+    <script>
+      let app = new Vue({
+        el: "#app",
+        data() {
+          return {
+            newTodo: "",
+            searchWord: "",
+            todos: [],
+          };
+        },
+        methods: {
+          addTodo() {
+            if (!this.newTodo) return;
+            const todo = {
+              title: this.newTodo,
+              isCompleted: false,
+            };
+            this.todos.push(todo);
+            this.newTodo = "";
+          },
+          deleteTodo(target) {
+            this.todos = this.todos.filter((todo, index) => {
+              return index !== target;
+            });
+          },
+        },
+        computed: {
+          filteredTodos: {
+            get() {
+              if (this.searchWord === "") {
+                return this.todos;
+              }
+              return this.todos.filter((todo) => {
+                return todo.title.indexOf(this.searchWord) !== -1;
+              });
+            },
+          },
+        },
+      });
+    </script>
+  </body>
+</html>
