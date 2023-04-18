@@ -20,32 +20,28 @@
   </head>
   <body>
     <div id="app" class="parent">
-      <array-test
-        v-for="member in members"
-        :key="member.name"
-        :item="member"
-        class="child"
-      ></array-test>
+      <emit-test @custom-event="parentMethod" class="child" />
     </div>
     <script>
-      let arrayTest = {
-        props: {
-          item: {
-            type: Object,
+      let emitTest = {
+        template: `<div>
+                <button @click="childMethod">子側のボタン</button>
+            </div>`,
+        methods: {
+          childMethod() {
+            this.$emit("custom-event", "子の値");
           },
         },
-        template: `<div><p>{{ item.name }}</p></div>
-            `,
       };
       let app = new Vue({
         el: "#app",
         components: {
-          arrayTest,
+          emitTest,
         },
-        data() {
-          return {
-            members: [{ name: "久保" }, { name: "南野" }, { name: "堂安" }],
-          };
+        methods: {
+          parentMethod(e) {
+            console.log(e);
+          },
         },
       });
     </script>

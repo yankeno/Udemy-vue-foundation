@@ -20,31 +20,40 @@
   </head>
   <body>
     <div id="app" class="parent">
-      <array-test
-        v-for="member in members"
-        :key="member.name"
-        :item="member"
+      <!-- <custom-input
+        :value="parentValue"
+        @input="parentValue = $event"
         class="child"
-      ></array-test>
+      ></custom-input
+      >{{ parentValue }} -->
+      <custom-input v-model="parentValue" class="child"></custom-input>{{
+      parentValue }}
     </div>
     <script>
-      let arrayTest = {
+      let customInput = {
         props: {
-          item: {
-            type: Object,
+          value: {
+            type: String,
           },
         },
-        template: `<div><p>{{ item.name }}</p></div>
-            `,
+        template: `
+            <div>
+                <input :value="value" @input="childEvent">
+                </div>`,
+        methods: {
+          childEvent(e) {
+            this.$emit("input", e.target.value);
+          },
+        },
       };
       let app = new Vue({
         el: "#app",
         components: {
-          arrayTest,
+          customInput,
         },
         data() {
           return {
-            members: [{ name: "久保" }, { name: "南野" }, { name: "堂安" }],
+            parentValue: "",
           };
         },
       });

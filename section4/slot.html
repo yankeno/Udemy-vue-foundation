@@ -20,32 +20,22 @@
   </head>
   <body>
     <div id="app" class="parent">
-      <array-test
-        v-for="member in members"
-        :key="member.name"
-        :item="member"
-        class="child"
-      ></array-test>
+      <child-component class="child">親の文字です</child-component>
+      <child-component class="child">
+        <child-component class="child"></child-component>
+      </child-component>
     </div>
     <script>
-      let arrayTest = {
-        props: {
-          item: {
-            type: Object,
-          },
-        },
-        template: `<div><p>{{ item.name }}</p></div>
-            `,
+      let childComponent = {
+        template: `<div>久保 <slot>南野</slot> 堂安</div>`,
       };
       let app = new Vue({
         el: "#app",
-        components: {
-          arrayTest,
-        },
         data() {
-          return {
-            members: [{ name: "久保" }, { name: "南野" }, { name: "堂安" }],
-          };
+          return {};
+        },
+        components: {
+          childComponent,
         },
       });
     </script>
