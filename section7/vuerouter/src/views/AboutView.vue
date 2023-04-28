@@ -21,5 +21,13 @@ export default {
       router.push("/");
     },
   },
+  //   beforeRouteLeave(to, from, next) {
+  //     const checkLeave = window.confirm("本当にこのページから離れますか？");
+  //     if (checkLeave) {
+  //       next();
+  //     } else {
+  //       next(false);
+  //     }
+  //   },
 };
 </script>

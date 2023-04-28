@@ -8,8 +8,11 @@
       <router-link to="/user/profile">User</router-link>
     </nav>
     <div class="blue-b">
-      <router-view />
+      <transition name="fade">
+        <router-view />
+      </transition>
     </div>
+    <router-view name="sub" />
   </div>
 </template>
 
